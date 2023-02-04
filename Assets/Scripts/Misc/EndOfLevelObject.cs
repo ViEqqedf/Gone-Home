@@ -30,17 +30,15 @@ public class EndOfLevelObject : MonoBehaviour
         Ship ship = collision.GetComponent<Ship>();
         if (ship)
         {
-            //???
-            StartCoroutine(ShowCongratulation());
+            // StartCoroutine(ShowCongratulation());
             Debug.Log("FUCK Yeahhhhhhh!!");
-            // temp
-            ship.SetDead(true);
+            m_welcomeGo.SetActive(true);
+            ship.SetWin(transform.gameObject);
         }
     }
 
     private IEnumerator ShowCongratulation()
     {
-        m_welcomeGo.SetActive(true);
         yield return new WaitForSeconds(2);
         UnityEngine.SceneManagement.SceneManager.LoadScene("Level" + (m_curLevel + 1));
     }
