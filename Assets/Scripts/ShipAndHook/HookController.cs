@@ -97,8 +97,14 @@ public class HookController : MonoBehaviour
         return finished;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
+    private void OnTriggerEnter2D(Collider2D collision) {
+        State curState = m_Ship.m_ShipController.m_StateMachine.CurrentState;
+        if (curState.StateId == State.StateIdEnum.StateHookLocked) {
+            return;
+        }
+
+        Debug.Log($"{transform.name} got collision: {collision.transform.root.name}");
+
         if (collision.gameObject.layer == LayerMask.NameToLayer("HookColliders"))
         {
             Planet planet = collision.gameObject.transform.parent.GetComponent<Planet>(); // Get planet from the fake collider's parent object

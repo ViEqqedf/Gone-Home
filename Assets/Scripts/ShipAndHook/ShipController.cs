@@ -12,7 +12,7 @@ public class ShipController : MonoBehaviour
     [ReadOnly]
     public Vector3 m_Velocity = Vector3.zero;
 
-    private StateMachine m_StateMachine = new StateMachine();
+    public StateMachine m_StateMachine = new StateMachine();
     private Dictionary<HookType, HookController> m_HookLookup = new Dictionary<HookType, HookController>();
 
     private Planet m_HookGrabbedPlanet = null;
@@ -70,7 +70,7 @@ public class ShipController : MonoBehaviour
     {
         m_HookLookup[type].InitHookStateBeforeShoot();
     }
-    
+
     public void InitHookStateBeforeRetrieve(HookType type)
     {
         m_HookLookup[type].InitHookStateBeforeRetrieve();
@@ -169,6 +169,10 @@ public class StateCruise : State
 {
     private ShipController m_Controller;
 
+    public StateCruise() {
+        StateId = StateIdEnum.StateCruise;
+    }
+
     public override void OnEntrance(State lastState)
     {
         Debug.Log("Enter StateCruise");
@@ -202,7 +206,7 @@ public class StateDeployHook : State
     public StateDeployHook(HookType type) : base()
     {
         m_HookType = type;
-
+        StateId = StateIdEnum.StateDeployHook;
     }
 
     public override void OnEntrance(State lastState)
@@ -257,6 +261,7 @@ public class StateRetrieveHook : State
     public StateRetrieveHook(HookType type) : base()
     {
         m_HookType = type;
+        StateId = StateIdEnum.StateRetrieveHook;
     }
 
     public override void OnEntrance(State lastState)
@@ -311,6 +316,7 @@ public class StateHookLocked : State
     public StateHookLocked(HookType type) : base()
     {
         m_HookType = type;
+        StateId = StateIdEnum.StateHookLocked;
     }
 
     public override void OnEntrance(State lastState)
@@ -324,7 +330,7 @@ public class StateHookLocked : State
     public override State OnRun()
     {
         if(m_Controller.CheckAndResetTriggerHookRelease()
-            || Input.GetButtonDown("Left") 
+            || Input.GetButtonDown("Left")
             || Input.GetButtonDown("Right"))
         {
             return new StateRetrieveHook(m_HookType);

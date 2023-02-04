@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,8 +13,10 @@ public class Ship : MonoBehaviour
     public float m_SpeedGainingEnergy = 1.0f;
     public float m_SpeedLosingEnergy = 2.0f;
 
-    public float m_InitEnergyAmount = 5.0f;
+    public float m_InitEnergyAmount = 0f;
     public float m_TotalEnergyCapacity = 10.0f;
+
+    public bool m_isDead { get; private set; }
 
     private float m_CurrentEnergyAmount;
 
@@ -25,14 +28,20 @@ public class Ship : MonoBehaviour
         Assert.IsNotNull(m_ShipUIController);
 
         m_CurrentEnergyAmount = m_InitEnergyAmount;
+        m_isDead = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (m_isDead) {
+            return;
+        }
+
         Planet planet = m_ShipController.GetHookGrabbedPlanet();
         if (planet)
         {
+            Debug.Log(planet.gameObject.name);
             if (DrainPlanetEnergy(planet)) // Energy all drained
             {
                 m_ShipController.TriggerHookRelease();
@@ -47,6 +56,17 @@ public class Ship : MonoBehaviour
         }
 
         m_ShipUIController.SetEnergyPortion(m_CurrentEnergyAmount / m_TotalEnergyCapacity);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("HookColliders")) {
+            Debug.Log("[ViE] Dead!!!");
+            m_isDead = true;
+            m_ShipController.enabled = false;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision) {
     }
 
     private bool DrainPlanetEnergy(Planet planet)

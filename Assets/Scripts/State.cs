@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -42,8 +43,16 @@ public class StateMachine
     }
 }
 
-public abstract class State
-{
+public abstract class State {
+    [Flags]
+    public enum StateIdEnum {
+        StateCruise = 1 << 0,
+        StateDeployHook = 1 << 1,
+        StateHookLocked = 1 << 2,
+        StateRetrieveHook = 1 << 3,
+    }
+
+    public StateIdEnum StateId { get; protected set; }
     public StateMachine Parent { get; private set; }
 
     public void Init(StateMachine parent)
