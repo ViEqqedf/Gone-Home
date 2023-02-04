@@ -4838,7 +4838,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &782398195
 Transform:
   m_ObjectHideFlags: 0
@@ -4846,13 +4846,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 782398194}
-  m_LocalRotation: {x: -0.0000021234155, y: 0.7071068, z: -0.7071068, w: 0.0000021234155}
-  m_LocalPosition: {x: -0.05, y: -0.9, z: 10}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1666530168704357471}
-  m_RootOrder: 4
+  m_Father: {fileID: 6753193680465119494}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: -180}
 --- !u!198 &782398197
 ParticleSystem:
@@ -4862,7 +4862,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 782398194}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 0.3
   simulationSpeed: 1
   stopAction: 1
   cullingMode: 0
@@ -24105,6 +24105,55 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!1 &195877567517554876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6753193680465119494}
+  - component: {fileID: 4926146953234523119}
+  m_Layer: 0
+  m_Name: TailFrame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6753193680465119494
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 195877567517554876}
+  m_LocalRotation: {x: -0.0000021234155, y: 0.7071068, z: -0.7071068, w: 0.0000021234155}
+  m_LocalPosition: {x: -0.050000012, y: -0.9, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 782398195}
+  m_Father: {fileID: 1666530168704357471}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: -180}
+--- !u!111 &4926146953234523119
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 195877567517554876}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 77be9b78b70ef8648b53e6ba317801f6, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 77be9b78b70ef8648b53e6ba317801f6, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &977562350164038610
 GameObject:
   m_ObjectHideFlags: 0
@@ -24262,7 +24311,7 @@ Transform:
   - {fileID: 8813808456183821667}
   - {fileID: 7690484489017222160}
   - {fileID: 7611058323357644159}
-  - {fileID: 782398195}
+  - {fileID: 6753193680465119494}
   - {fileID: 543666739}
   - {fileID: 1755327466}
   - {fileID: 940512536}
@@ -24383,6 +24432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ShipController: {fileID: 1666530168704357470}
   m_ShipUIController: {fileID: 0}
+  m_tailFlameGo: {fileID: 195877567517554876}
   m_SpeedDrainingPlanetEnergy: 1
   m_SpeedGainingEnergy: 1
   m_SpeedLosingEnergy: 0

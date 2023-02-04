@@ -9,11 +9,11 @@ public class Ship : MonoBehaviour
     public ShipController m_ShipController;
     public ShipUIController m_ShipUIController;
 
+    public GameObject m_tailFlameGo;
     public float m_SpeedDrainingPlanetEnergy = 1.0f;
     public float m_SpeedGainingEnergy = 1.0f;
     public float m_SpeedLosingEnergy = 2.0f;
     public float m_SpeedLoseEnergyByTurning = 2.0f;
-
     public float m_InitEnergyAmount = 0f;
     public float m_TotalEnergyCapacity = 10.0f;
 
@@ -22,6 +22,8 @@ public class Ship : MonoBehaviour
     public GameObject m_earthGo { get; private set; }
 
     private float m_CurrentEnergyAmount;
+    private bool m_isLaunched = false;
+    private float launchTime = 2;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +34,10 @@ public class Ship : MonoBehaviour
 
         m_CurrentEnergyAmount = m_InitEnergyAmount;
         SetDead(false);
+
+        m_isLaunched = false;
+        m_ShipController.enabled = false;
+        m_tailFlameGo.SetActive(true);
     }
 
     // Update is called once per frame
@@ -39,6 +45,19 @@ public class Ship : MonoBehaviour
     {
         if (m_isDead) {
             return;
+        }
+
+        if (!m_isLaunched) {
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                m_isLaunched = true;
+                m_ShipController.enabled = true;
+            }
+        } else {
+            launchTime -= Time.deltaTime;
+            if (launchTime <= 0) {
+                m_tailFlameGo.GetComponent<Animation>().Play();
+                launchTime = float.MaxValue;
+            }
         }
 
         Planet planet = m_ShipController.GetHookGrabbedPlanet();
