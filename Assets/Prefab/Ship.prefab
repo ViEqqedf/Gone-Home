@@ -4847,7 +4847,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 782398194}
   m_LocalRotation: {x: -0.0000021234155, y: 0.7071068, z: -0.7071068, w: 0.0000021234155}
-  m_LocalPosition: {x: -0.05, y: -1.16, z: 10}
+  m_LocalPosition: {x: -0.05, y: -0.9, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9611,7 +9611,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1000
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -25402,11 +25402,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 448408, guid: 24c4f75140285de47a21f52f0d16bb55, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.99999976
       objectReference: {fileID: 0}
     - target: {fileID: 448408, guid: 24c4f75140285de47a21f52f0d16bb55, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.165
+      value: 1.1649997
       objectReference: {fileID: 0}
     - target: {fileID: 448408, guid: 24c4f75140285de47a21f52f0d16bb55, type: 3}
       propertyPath: m_LocalScale.z
@@ -25526,11 +25526,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 21249526, guid: 24c4f75140285de47a21f52f0d16bb55, type: 3}
       propertyPath: m_Color.g
-      value: 0.01165
+      value: 0.011649997
       objectReference: {fileID: 0}
     - target: {fileID: 21249526, guid: 24c4f75140285de47a21f52f0d16bb55, type: 3}
       propertyPath: m_Color.r
-      value: 0.01
+      value: 0.009999998
       objectReference: {fileID: 0}
     - target: {fileID: 21249526, guid: 24c4f75140285de47a21f52f0d16bb55, type: 3}
       propertyPath: m_SortingOrder
