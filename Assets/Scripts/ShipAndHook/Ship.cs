@@ -28,7 +28,7 @@ public class Ship : MonoBehaviour
         Assert.IsNotNull(m_ShipUIController);
 
         m_CurrentEnergyAmount = m_InitEnergyAmount;
-        m_isDead = false;
+        SetDead(false);
     }
 
     // Update is called once per frame
@@ -41,7 +41,6 @@ public class Ship : MonoBehaviour
         Planet planet = m_ShipController.GetHookGrabbedPlanet();
         if (planet)
         {
-            Debug.Log(planet.gameObject.name);
             if (DrainPlanetEnergy(planet)) // Energy all drained
             {
                 m_ShipController.TriggerHookRelease();
@@ -58,11 +57,15 @@ public class Ship : MonoBehaviour
         m_ShipUIController.SetEnergyPortion(m_CurrentEnergyAmount / m_TotalEnergyCapacity);
     }
 
+    public void SetDead(bool isDead) {
+        m_isDead = isDead;
+        m_ShipController.enabled = false;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.layer == LayerMask.NameToLayer("HookColliders")) {
             Debug.Log("[ViE] Dead!!!");
-            m_isDead = true;
-            m_ShipController.enabled = false;
+            SetDead(true);
         }
     }
 

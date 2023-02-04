@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -11,6 +13,7 @@ public class Planet : MonoBehaviour
     public float m_PlanetInitEnergy = 10.0f;
     public float m_PlanetMinScale = 0.1f;
 
+    [SerializeField]
     private float m_PlanetCurEnergy;
     private Vector3 m_PlanetOrgScale;
     private int m_SetToDestroyAtNextNFrame = -1;
@@ -69,6 +72,6 @@ public class Planet : MonoBehaviour
 
     public void OnEnergyDrained()
     {
-        
+
     }
 }
