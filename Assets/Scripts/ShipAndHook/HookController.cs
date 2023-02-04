@@ -81,8 +81,8 @@ public class HookController : MonoBehaviour
         return finished;
     }
 
-    public bool UpdateRetrieveHookPos(Vector3 direction)
-    {
+    public bool UpdateRetrieveHookPos(Vector3 direction) {
+        direction = direction.normalized;
         bool finished = false;
 
         if (m_CurProgress > 0)

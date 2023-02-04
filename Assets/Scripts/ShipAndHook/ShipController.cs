@@ -136,12 +136,13 @@ public class ShipController : MonoBehaviour
 
     public bool MoveRetrievingHook(HookType type)
     {
+        // simple handle
         switch (type)
         {
             case HookType.Left:
-                return m_HookL.UpdateRetrieveHookPos(-transform.right);
+                return m_HookL.UpdateRetrieveHookPos(m_HookL.transform.position - transform.position);
             case HookType.Right:
-                return m_HookR.UpdateRetrieveHookPos(transform.right);
+                return m_HookR.UpdateRetrieveHookPos(m_HookR.transform.position - transform.position);
         }
 
         return false;
