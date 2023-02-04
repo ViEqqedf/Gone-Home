@@ -14,6 +14,7 @@ public class ShipController : MonoBehaviour
     public GameObject leftRopeEndGo;
     public GameObject rightRopeEndGo;
 
+    public Vector3 m_initSpeed = Vector3.zero;
     [ReadOnly]
     public Vector3 m_Velocity = Vector3.zero;
 
@@ -32,7 +33,7 @@ public class ShipController : MonoBehaviour
         Assert.IsNotNull(m_HookL);
         Assert.IsNotNull(m_HookR);
 
-        m_Velocity = new Vector3(0.5f, 1, 0);
+        m_Velocity = m_initSpeed;
         m_Velocity.Normalize();
 
         m_HookLookup[HookType.Left] = m_HookL;

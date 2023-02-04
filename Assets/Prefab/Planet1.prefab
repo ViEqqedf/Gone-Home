@@ -92,7 +92,6 @@ GameObject:
   - component: {fileID: 5705400506426664595}
   - component: {fileID: 5705400506426664599}
   - component: {fileID: 5705400506426664596}
-  - component: {fileID: 5705400506426664597}
   m_Layer: 8
   m_Name: HookCollider
   m_TagString: Untagged
@@ -183,21 +182,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.6
---- !u!114 &5705400506426664597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5705400506426664592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a0c69c77218e314288d3f0f58851c19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PlanetController: {fileID: 0}
-  m_PlanetInitEnergy: 10
-  m_PlanetMinScale: 0.1
 --- !u!1 &9042588715492086385
 GameObject:
   m_ObjectHideFlags: 0
