@@ -18,6 +18,8 @@ public class Ship : MonoBehaviour
     public float m_TotalEnergyCapacity = 10.0f;
 
     public bool m_isDead { get; private set; }
+    public bool m_isWin { get; private set; }
+    public GameObject m_earthGo { get; private set; }
 
     private float m_CurrentEnergyAmount;
 
@@ -65,8 +67,14 @@ public class Ship : MonoBehaviour
         m_ShipController.enabled = !isDead;
     }
 
+    public void SetWin(GameObject go) {
+        m_isWin = true;
+        m_earthGo = go;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("HookColliders")) {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("HookColliders") ||
+            collision.gameObject.CompareTag("FallingStone")) {
             Debug.Log("[ViE] Dead!!!");
             SetDead(true);
         }

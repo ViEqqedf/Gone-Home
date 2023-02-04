@@ -50,6 +50,7 @@ public abstract class State {
         StateDeployHook = 1 << 1,
         StateHookLocked = 1 << 2,
         StateRetrieveHook = 1 << 3,
+        StateWin = 1 << 4,
     }
 
     public StateIdEnum StateId { get; protected set; }

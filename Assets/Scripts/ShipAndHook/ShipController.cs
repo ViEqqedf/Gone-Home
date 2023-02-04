@@ -79,10 +79,12 @@ public class ShipController : MonoBehaviour
     {
         m_StateMachine.Update();
 
-        leftRopeStartGo.transform.localPosition = hookLInitLocalPos;
-        rightRopeStartGo.transform.localPosition = hookRInitLocalPos;
-        leftRopeEndGo.transform.position = m_HookL.transform.position;
-        rightRopeEndGo.transform.position = m_HookR.transform.position;
+        if (!m_Owner.m_isWin) {
+            leftRopeStartGo.transform.localPosition = hookLInitLocalPos;
+            rightRopeStartGo.transform.localPosition = hookRInitLocalPos;
+            leftRopeEndGo.transform.position = m_HookL.transform.position;
+            rightRopeEndGo.transform.position = m_HookR.transform.position;
+        }
 
         //if (Input.GetButtonDown("Left"))
         //{
@@ -195,21 +197,32 @@ public class ShipController : MonoBehaviour
 
     public void RotateToPlanetRotationTangent()
     {
-        Vector3 toShip = transform.position - m_HookGrabbedPlanet.transform.position;
+        RotateToGoRotationTangent(m_HookGrabbedPlanet.transform,
+            m_HookGrabbedPlanet.IsClockwiseRotate());
+    }
+
+    public void RotateToGoRotationTangent(Transform trans, bool isClockwiseRotate) {
+        Vector3 toShip = transform.position - trans.position;
         Vector3 up = Vector3.Cross(Vector3.forward, toShip);
-        int clockwiseFlag = m_HookGrabbedPlanet.IsClockwiseRotate() ? -1 : 1;
+        int clockwiseFlag = isClockwiseRotate ? -1 : 1;
         transform.up = clockwiseFlag * up;
     }
 
     public void MoveAndRotateWithPlanet()
     {
-        Vector3 toShip = transform.position - m_HookGrabbedPlanet.transform.position;
-        float rotateSpeed = m_HookGrabbedPlanet.m_PlanetController.m_AngularRotateSpeed;
+        MoveAndRotateWithGo(m_HookGrabbedPlanet.gameObject,
+            m_HookGrabbedPlanet.m_PlanetController.m_AngularRotateSpeed);
+    }
+
+    public void MoveAndRotateWithGo(GameObject go, float speed)
+    {
+        Vector3 toShip = transform.position - go.transform.position;
+        float rotateSpeed = speed;
         Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, rotateSpeed * Time.deltaTime);
         Matrix4x4 rotMat = Matrix4x4.Rotate(rotation);
         //Vector3 toShipNew = rotation * toShip;
         Vector3 toShipNew = rotMat.MultiplyVector(toShip);
-        transform.position = toShipNew + m_HookGrabbedPlanet.transform.position;
+        transform.position = toShipNew + go.transform.position;
         transform.rotation = (rotation * transform.rotation).normalized;
     }
 
@@ -346,6 +359,11 @@ public class StateCruise : State
         {
             return new StateDeployHook(HookType.Right);
         }
+
+        if (m_Controller.m_Owner.m_isWin) {
+            return new StateWin();
+        }
+
         return null;
     }
 
@@ -408,6 +426,10 @@ public class StateDeployHook : State
             return new StateRetrieveHook(m_HookType);
         }
 
+        if (m_Controller.m_Owner.m_isWin) {
+            return new StateWin();
+        }
+
         return null;
     }
 }
@@ -464,6 +486,10 @@ public class StateRetrieveHook : State
             return new StateCruise();
         }
 
+        if (m_Controller.m_Owner.m_isWin) {
+            return new StateWin();
+        }
+
         return null;
     }
 }
@@ -516,11 +542,48 @@ public class StateHookLocked : State
         m_Controller.LockHookAtPlanetCenter(hookLocked);
         m_Controller.RotateHooks();
 
+        if (m_Controller.m_Owner.m_isWin) {
+            return new StateWin();
+        }
         return null;
     }
 
     public override void OnExit(State nextState)
     {
         m_Controller.OnHookReleasePlanet();
+    }
+}
+
+public class StateWin : State {
+    private ShipController m_Controller;
+    private GameObject m_earthGo;
+    private PlanetController m_earthController;
+
+    public StateWin() : base() {
+        StateId = StateIdEnum.StateWin;
+    }
+
+    public override void OnEntrance(State lastState)
+    {
+        Debug.Log("Enter Win");
+
+        m_Controller = Parent.Owner.GetComponent<ShipController>();
+        m_earthGo = m_Controller.m_Owner.m_earthGo;
+        m_earthController = m_earthGo.GetComponent<PlanetController>();
+
+        GameObject.Destroy(m_Controller.transform.Find("LineL")?.gameObject);
+        GameObject.Destroy(m_Controller.transform.Find("LineL")?.gameObject);
+        m_Controller.m_HookL.transform.localPosition = new Vector3(-0.8f, 0.25f, 0);
+        m_Controller.m_HookR.transform.localPosition = new Vector3(0.8f, 0.25f, 0);
+
+        m_Controller.RotateToGoRotationTangent(
+            m_earthGo.transform, m_earthController.m_AngularRotateSpeed < 0);
+    }
+
+    public override State OnRun() {
+        m_Controller.MoveAndRotateWithGo(
+            m_earthGo, m_earthGo.GetComponent<PlanetController>().m_AngularRotateSpeed);
+
+        return null;
     }
 }
