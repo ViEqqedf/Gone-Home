@@ -38,6 +38,12 @@ public class ShipController : MonoBehaviour
     void Update()
     {
         m_StateMachine.Update();
+
+        if (Input.GetButtonDown("Left")) {
+
+        } else {
+
+        }
     }
 
     private void OnDestroy()
@@ -74,6 +80,10 @@ public class ShipController : MonoBehaviour
     public void InitHookStateBeforeRetrieve(HookType type)
     {
         m_HookLookup[type].InitHookStateBeforeRetrieve();
+    }
+
+    public void SwitchHookAnimState(HookType type, bool isHit) {
+        m_HookLookup[type].SwitchHookAnimState(isHit);
     }
 
     public bool MoveShootHook(HookType type)
@@ -272,6 +282,7 @@ public class StateRetrieveHook : State
 
         m_Controller = Parent.Owner.GetComponent<ShipController>();
         m_Controller.InitHookStateBeforeRetrieve(m_HookType);
+        m_Controller.SwitchHookAnimState(m_HookType, false);
     }
 
     public override State OnRun()

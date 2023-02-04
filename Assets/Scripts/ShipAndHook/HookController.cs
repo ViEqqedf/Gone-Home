@@ -37,9 +37,14 @@ public class HookController : MonoBehaviour
         transform.position = m_GOShip.transform.position + offset;
     }
 
-    public void UpdateRot()
-    {
-        transform.rotation = m_GOShip.transform.rotation;
+    public void UpdateRot() {
+        // if (m_ShipController.m_StateMachine.CurrentState.StateId ==
+            // State.StateIdEnum.StateHookLocked) {
+            float angle = m_GOShip.transform.rotation.eulerAngles.z;
+            transform.rotation = Quaternion.Euler(0, 0, angle + 180);
+        // } else {
+            // transform.rotation = m_GOShip.transform.rotation;
+        // }
     }
 
     public void InitHookStateBeforeShoot()
@@ -50,6 +55,10 @@ public class HookController : MonoBehaviour
     public void InitHookStateBeforeRetrieve()
     {
         m_CurProgress = (m_GOShip.transform.position - transform.position).magnitude;
+    }
+
+    public void SwitchHookAnimState(bool isHit) {
+        transform.GetComponentInChildren<Animator>().SetBool("Hit", isHit);
     }
 
     public float GetCurProgress()
@@ -111,6 +120,7 @@ public class HookController : MonoBehaviour
             if (planet != null)
             {
                 m_ShipController.OnHookGrabOnPlanet(planet);
+                SwitchHookAnimState(true);
             }
         }
     }
