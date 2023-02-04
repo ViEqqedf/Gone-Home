@@ -10,6 +10,8 @@ public class HookController : MonoBehaviour
     public GameObject m_GOShip;
     public float m_HookSpeed = 1f;
     public float m_HookMaxLen = 10f;
+    public AudioSource m_shootAudio;
+    public AudioSource m_hitAudio;
 
     [ReadOnly]
     public Vector3 m_RelOffsetHook;
@@ -45,6 +47,7 @@ public class HookController : MonoBehaviour
     public void InitHookStateBeforeShoot()
     {
         m_CurProgress = 0f;
+        m_shootAudio.Play();
     }
 
     public void InitHookStateBeforeRetrieve()
@@ -112,8 +115,8 @@ public class HookController : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("HookColliders"))
         {
             Planet planet = collision.gameObject.transform.parent.GetComponent<Planet>(); // Get planet from the fake collider's parent object
-            if (planet != null)
-            {
+            if (planet != null) {
+                m_hitAudio.Play();
                 m_ShipController.OnHookGrabOnPlanet(planet);
                 SwitchHookAnimState(true);
             }
