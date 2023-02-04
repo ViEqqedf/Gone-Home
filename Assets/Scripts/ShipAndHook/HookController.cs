@@ -38,13 +38,8 @@ public class HookController : MonoBehaviour
     }
 
     public void UpdateRot() {
-        // if (m_ShipController.m_StateMachine.CurrentState.StateId ==
-            // State.StateIdEnum.StateHookLocked) {
-            float angle = m_GOShip.transform.rotation.eulerAngles.z;
-            transform.rotation = Quaternion.Euler(0, 0, angle + 180);
-        // } else {
-            // transform.rotation = m_GOShip.transform.rotation;
-        // }
+        float angle = m_GOShip.transform.rotation.eulerAngles.z;
+        transform.rotation = Quaternion.Euler(0, 0, angle + 180);
     }
 
     public void InitHookStateBeforeShoot()
