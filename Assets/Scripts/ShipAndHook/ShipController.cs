@@ -9,6 +9,11 @@ public class ShipController : MonoBehaviour
     public HookController m_HookL;
     public HookController m_HookR;
 
+    public GameObject leftRopeStartGo;
+    public GameObject rightRopeStartGo;
+    public GameObject leftRopeEndGo;
+    public GameObject rightRopeEndGo;
+
     [ReadOnly]
     public Vector3 m_Velocity = Vector3.zero;
 
@@ -17,6 +22,8 @@ public class ShipController : MonoBehaviour
 
     private Planet m_HookGrabbedPlanet = null;
     private bool m_TriggerHookRelease = false;
+    private Vector3 hookLInitLocalPos;
+    private Vector3 hookRInitLocalPos;
 
     // Start is called before the first frame update
     void Start()
@@ -32,12 +39,20 @@ public class ShipController : MonoBehaviour
         m_HookLookup[HookType.Right] = m_HookR;
 
         m_StateMachine.Init(gameObject, new StateCruise());
+
+        hookLInitLocalPos = m_HookL.transform.localPosition;
+        hookRInitLocalPos = m_HookR.transform.localPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
         m_StateMachine.Update();
+
+        leftRopeStartGo.transform.localPosition = hookLInitLocalPos;
+        rightRopeStartGo.transform.localPosition = hookRInitLocalPos;
+        leftRopeEndGo.transform.position = m_HookL.transform.position;
+        rightRopeEndGo.transform.position = m_HookR.transform.position;
 
         if (Input.GetButtonDown("Left")) {
 
