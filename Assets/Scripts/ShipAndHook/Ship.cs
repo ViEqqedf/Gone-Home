@@ -66,7 +66,8 @@ public class Ship : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("HookColliders")) {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("HookColliders") ||
+            collision.gameObject.CompareTag("FallingStone")) {
             Debug.Log("[ViE] Dead!!!");
             SetDead(true);
         }
