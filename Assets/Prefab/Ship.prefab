@@ -292,6 +292,12 @@ MonoBehaviour:
   m_HookL: {fileID: 1666530169349804402}
   m_HookR: {fileID: 8813808456183821669}
   m_Owner: {fileID: 0}
+  m_EngineStartAudioSource: {fileID: 0}
+  m_EngineRunningAudioSource: {fileID: 0}
+  m_GOTLEnginePE: {fileID: 0}
+  m_GOTREnginePE: {fileID: 0}
+  m_GOBLEnginePE: {fileID: 0}
+  m_GOBREnginePE: {fileID: 0}
   leftRopeStartGo: {fileID: 4541967924089461824}
   rightRopeStartGo: {fileID: 6861490065130991581}
   leftRopeEndGo: {fileID: 977562350164038610}
