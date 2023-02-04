@@ -13,7 +13,7 @@ public class Planet : MonoBehaviour
     public float m_PlanetInitEnergy = 10.0f;
     public float m_PlanetMinScale = 0.1f;
 
-    [SerializeField]
+    [ReadOnly]
     private float m_PlanetCurEnergy;
     private Vector3 m_PlanetOrgScale;
     private int m_SetToDestroyAtNextNFrame = -1;
@@ -39,6 +39,10 @@ public class Planet : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public bool IsClockwiseRotate() {
+        return m_PlanetController.m_AngularRotateSpeed < 0;
     }
 
     public void SetToDestroy()

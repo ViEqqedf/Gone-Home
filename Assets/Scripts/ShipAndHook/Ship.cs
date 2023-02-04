@@ -59,7 +59,7 @@ public class Ship : MonoBehaviour
 
     public void SetDead(bool isDead) {
         m_isDead = isDead;
-        m_ShipController.enabled = false;
+        m_ShipController.enabled = !isDead;
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {

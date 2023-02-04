@@ -113,7 +113,8 @@ public class ShipController : MonoBehaviour
     public void OnHookReleasePlanet()
     {
         float radius = (m_HookGrabbedPlanet.transform.position - transform.position).magnitude;
-        m_Velocity = Mathf.Deg2Rad * m_HookGrabbedPlanet.m_PlanetController.m_AngularRotateSpeed * radius * transform.up;
+        int clockwiseFlag = m_HookGrabbedPlanet.IsClockwiseRotate() ? -1 : 1;
+        m_Velocity = clockwiseFlag * Mathf.Deg2Rad * m_HookGrabbedPlanet.m_PlanetController.m_AngularRotateSpeed * radius * transform.up;
 
         m_HookGrabbedPlanet.SetToDestroy();
         m_HookGrabbedPlanet = null;
@@ -128,7 +129,8 @@ public class ShipController : MonoBehaviour
     {
         Vector3 toShip = transform.position - m_HookGrabbedPlanet.transform.position;
         Vector3 up = Vector3.Cross(Vector3.forward, toShip);
-        transform.up = up;
+        int clockwiseFlag = m_HookGrabbedPlanet.IsClockwiseRotate() ? -1 : 1;
+        transform.up = clockwiseFlag * up;
     }
 
     public void MoveAndRotateWithPlanet()
