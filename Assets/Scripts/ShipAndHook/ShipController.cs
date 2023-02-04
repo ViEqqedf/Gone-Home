@@ -9,11 +9,16 @@ public class ShipController : MonoBehaviour
     public HookController m_HookL;
     public HookController m_HookR;
 
+    public Ship m_Owner;
+
     public GameObject leftRopeStartGo;
     public GameObject rightRopeStartGo;
     public GameObject leftRopeEndGo;
     public GameObject rightRopeEndGo;
 
+    public float m_AngularTurnSpeed = 10.0f;
+
+    [Header("Debug Params")]
     public Vector3 m_initSpeed = Vector3.zero;
     [ReadOnly]
     public Vector3 m_Velocity = Vector3.zero;
@@ -32,6 +37,8 @@ public class ShipController : MonoBehaviour
         Assert.IsNotNull(m_StateMachine);
         Assert.IsNotNull(m_HookL);
         Assert.IsNotNull(m_HookR);
+        m_Owner = GetComponent<Ship>();
+        Assert.IsNotNull(m_Owner);
 
         m_Velocity = m_initSpeed;
         m_Velocity.Normalize();
@@ -55,11 +62,14 @@ public class ShipController : MonoBehaviour
         leftRopeEndGo.transform.position = m_HookL.transform.position;
         rightRopeEndGo.transform.position = m_HookR.transform.position;
 
-        if (Input.GetButtonDown("Left")) {
+        //if (Input.GetButtonDown("Left"))
+        //{
 
-        } else {
+        //}
+        //else
+        //{
 
-        }
+        //}
     }
 
     private void OnDestroy()
@@ -70,6 +80,14 @@ public class ShipController : MonoBehaviour
     public void MoveShipInCruise()
     {
         transform.position = transform.position + m_Velocity * Time.deltaTime;
+    }
+
+    public void RotateShipByManualTurning(float degree)
+    {
+        Quaternion rotation = Quaternion.Euler(0, 0, degree);
+        transform.rotation = rotation * transform.rotation;
+
+        m_Owner.ConsumeEnergyByTurning();
     }
 
     public void RotateHooks()
@@ -98,7 +116,8 @@ public class ShipController : MonoBehaviour
         m_HookLookup[type].InitHookStateBeforeRetrieve();
     }
 
-    public void SwitchHookAnimState(HookType type, bool isHit) {
+    public void SwitchHookAnimState(HookType type, bool isHit)
+    {
         m_HookLookup[type].SwitchHookAnimState(isHit);
     }
 
@@ -178,7 +197,7 @@ public class ShipController : MonoBehaviour
 
     public bool CheckAndResetTriggerHookRelease()
     {
-        if(m_TriggerHookRelease)
+        if (m_TriggerHookRelease)
         {
             m_TriggerHookRelease = false;
             return true;
@@ -197,7 +216,8 @@ public class StateCruise : State
 {
     private ShipController m_Controller;
 
-    public StateCruise() {
+    public StateCruise()
+    {
         StateId = StateIdEnum.StateCruise;
     }
 
@@ -209,16 +229,30 @@ public class StateCruise : State
 
     public override State OnRun()
     {
+        float rotDegree = 0;
+        if (Input.GetButton("LeftTurn"))
+        {
+            rotDegree = m_Controller.m_AngularTurnSpeed * Time.deltaTime;
+        }
+        if (Input.GetButton("RightTurn"))
+        {
+            rotDegree = -m_Controller.m_AngularTurnSpeed * Time.deltaTime;
+        }
+        if (rotDegree != 0)
+        {
+            m_Controller.RotateShipByManualTurning(rotDegree);
+        }
+
         m_Controller.MoveShipInCruise();
         m_Controller.MoveHookWithShip(HookType.Left);
         m_Controller.MoveHookWithShip(HookType.Right);
         m_Controller.RotateHooks();
 
-        if (Input.GetButtonDown("Left"))
+        if (Input.GetButtonDown("LeftHook"))
         {
             return new StateDeployHook(HookType.Left);
         }
-        if (Input.GetButtonDown("Right"))
+        if (Input.GetButtonDown("RightHook"))
         {
             return new StateDeployHook(HookType.Right);
         }
@@ -358,9 +392,9 @@ public class StateHookLocked : State
 
     public override State OnRun()
     {
-        if(m_Controller.CheckAndResetTriggerHookRelease()
-            || Input.GetButtonDown("Left")
-            || Input.GetButtonDown("Right"))
+        if (m_Controller.CheckAndResetTriggerHookRelease()
+            || Input.GetButtonDown("LeftHook")
+            || Input.GetButtonDown("RightHook"))
         {
             return new StateRetrieveHook(m_HookType);
         }

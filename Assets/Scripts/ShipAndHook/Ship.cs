@@ -12,6 +12,7 @@ public class Ship : MonoBehaviour
     public float m_SpeedDrainingPlanetEnergy = 1.0f;
     public float m_SpeedGainingEnergy = 1.0f;
     public float m_SpeedLosingEnergy = 2.0f;
+    public float m_SpeedLoseEnergyByTurning = 2.0f;
 
     public float m_InitEnergyAmount = 0f;
     public float m_TotalEnergyCapacity = 10.0f;
@@ -48,10 +49,12 @@ public class Ship : MonoBehaviour
         }
         else
         {
-            if(LoseEnergy())
-            {
-                OnEnergyEmpty();
-            }
+            LoseEnergy();
+        }
+
+        if(m_CurrentEnergyAmount==0)
+        {
+            OnEnergyEmpty();
         }
 
         m_ShipUIController.SetEnergyPortion(m_CurrentEnergyAmount / m_TotalEnergyCapacity);
@@ -86,16 +89,25 @@ public class Ship : MonoBehaviour
         return drained;
     }
 
-    private bool LoseEnergy()
+    private void LoseEnergy()
     {
-        m_CurrentEnergyAmount -= Time.deltaTime * m_SpeedLosingEnergy;
-        if(m_CurrentEnergyAmount<0)
+        ConsumeEnergy(Time.deltaTime * m_SpeedLosingEnergy);
+    }
+
+    public void ConsumeEnergyByTurning()
+    {
+        ConsumeEnergy(Time.deltaTime * m_SpeedLoseEnergyByTurning);
+    }
+
+    private void ConsumeEnergy(float energy)
+    {
+        m_CurrentEnergyAmount -= energy;
+        if (m_CurrentEnergyAmount < 0)
         {
             m_CurrentEnergyAmount = 0;
-            return true;
         }
-        return false;
     }
+
 
     private void OnEnergyEmpty()
     {
