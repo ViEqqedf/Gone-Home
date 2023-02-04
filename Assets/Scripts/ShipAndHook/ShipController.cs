@@ -11,6 +11,17 @@ public class ShipController : MonoBehaviour
 
     public Ship m_Owner;
 
+    [Header("Sound Effect")]
+    public AudioSource m_EngineStartAudioSource;
+    public AudioSource m_EngineRunningAudioSource;
+
+    [Header("Partical Effect GO")]
+    public GameObject m_GOTLEnginePE;
+    public GameObject m_GOTREnginePE;
+    public GameObject m_GOBLEnginePE;
+    public GameObject m_GOBREnginePE;
+
+    [Header("Rope")]
     public GameObject leftRopeStartGo;
     public GameObject rightRopeStartGo;
     public GameObject leftRopeEndGo;
@@ -39,6 +50,18 @@ public class ShipController : MonoBehaviour
         Assert.IsNotNull(m_HookR);
         m_Owner = GetComponent<Ship>();
         Assert.IsNotNull(m_Owner);
+        Assert.IsNotNull(m_EngineStartAudioSource);
+        Assert.IsNotNull(m_EngineRunningAudioSource);
+
+        Assert.IsNotNull(m_GOTLEnginePE);
+        Assert.IsNotNull(m_GOTREnginePE);
+        Assert.IsNotNull(m_GOBLEnginePE);
+        Assert.IsNotNull(m_GOBREnginePE);
+        
+        m_GOTLEnginePE.SetActive(false);
+        m_GOTREnginePE.SetActive(false);
+        m_GOBLEnginePE.SetActive(false);
+        m_GOBREnginePE.SetActive(false);
 
         m_Velocity = m_initSpeed;
 
@@ -204,6 +227,39 @@ public class ShipController : MonoBehaviour
         }
         return false;
     }
+
+    public void EnableLeftTurnEngines()
+    {
+        m_GOTREnginePE.SetActive(true);
+        m_GOBLEnginePE.SetActive(true);
+    }
+    public void DisableLeftTurnEngines()
+    {
+        m_GOTREnginePE.SetActive(false);
+        m_GOBLEnginePE.SetActive(false);
+    }
+    public void EnableRightTurnEngines()
+    {
+        m_GOTLEnginePE.SetActive(true);
+        m_GOBREnginePE.SetActive(true);
+    }
+    public void DisableRightTurnEngines()
+    {
+        m_GOTLEnginePE.SetActive(false);
+        m_GOBREnginePE.SetActive(false);
+    }
+
+    public void PlayEngineAudio()
+    {
+        m_EngineStartAudioSource.Play();
+        m_EngineRunningAudioSource.Play();
+    }
+
+    public void StopEngineAudio()
+    {
+        m_EngineStartAudioSource.Stop();
+        m_EngineRunningAudioSource.Stop();
+    }
 }
 
 public enum HookType
@@ -229,6 +285,40 @@ public class StateCruise : State
 
     public override State OnRun()
     {
+        // Effects
+        bool turnOn = false;
+        if (Input.GetButtonDown("LeftTurn"))
+        {
+            m_Controller.EnableLeftTurnEngines();
+            turnOn = true;
+        }
+        if (Input.GetButtonDown("RightTurn"))
+        {
+            m_Controller.EnableRightTurnEngines();
+            turnOn = true;
+        }
+        if (turnOn)
+        {
+            m_Controller.PlayEngineAudio();
+        }
+
+        bool turnOff = false;
+        if (Input.GetButtonUp("LeftTurn"))
+        {
+            m_Controller.DisableLeftTurnEngines();
+            turnOff = true;
+        }
+        if (Input.GetButtonUp("RightTurn"))
+        {
+            m_Controller.DisableRightTurnEngines();
+            turnOff = true;
+        }
+        if (turnOff)
+        {
+            m_Controller.StopEngineAudio();
+        }
+
+        // Turn
         float rotDegree = 0;
         if (Input.GetButton("LeftTurn"))
         {
@@ -257,6 +347,13 @@ public class StateCruise : State
             return new StateDeployHook(HookType.Right);
         }
         return null;
+    }
+
+    public override void OnExit(State nextState)
+    {
+        m_Controller.DisableLeftTurnEngines();
+        m_Controller.DisableRightTurnEngines();
+        m_Controller.StopEngineAudio();
     }
 }
 
