@@ -6,15 +6,17 @@ using UnityEngine.Assertions;
 public class EndOfLevelObject : MonoBehaviour
 {
     public int m_curLevel;
-    public GameObject m_congratulation;
     public Collider2D m_Collider;
+    public GameObject m_welcomeGo;
 
     // Start is called before the first frame update
     void Start()
     {
         m_Collider = GetComponent<Collider2D>();
         Assert.IsNotNull(m_Collider);
+        Assert.IsNotNull(m_welcomeGo);
         Assert.IsTrue(m_Collider.isTrigger);
+        m_welcomeGo.SetActive(false);
     }
 
     // Update is called once per frame
@@ -38,9 +40,7 @@ public class EndOfLevelObject : MonoBehaviour
 
     private IEnumerator ShowCongratulation()
     {
-        if (m_congratulation != null) {
-            m_congratulation.SetActive(true);
-        }
+        m_welcomeGo.SetActive(true);
         yield return new WaitForSeconds(2);
         UnityEngine.SceneManagement.SceneManager.LoadScene("Level" + (m_curLevel + 1));
     }
