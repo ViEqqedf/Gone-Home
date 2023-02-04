@@ -274,6 +274,7 @@ MonoBehaviour:
   m_SpeedDrainingPlanetEnergy: 1
   m_SpeedGainingEnergy: 1
   m_SpeedLosingEnergy: 0
+  m_SpeedLoseEnergyByTurning: 2
   m_InitEnergyAmount: 0
   m_TotalEnergyCapacity: 10
 --- !u!114 &1666530168704357470
@@ -290,10 +291,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HookL: {fileID: 1666530169349804402}
   m_HookR: {fileID: 8813808456183821669}
+  m_Owner: {fileID: 0}
   leftRopeStartGo: {fileID: 4541967924089461824}
   rightRopeStartGo: {fileID: 6861490065130991581}
   leftRopeEndGo: {fileID: 977562350164038610}
   rightRopeEndGo: {fileID: 1753230848572225053}
+  m_AngularTurnSpeed: 10
   m_initSpeed: {x: 0, y: 0, z: 0}
   m_Velocity: {x: 0, y: 0, z: 0}
 --- !u!61 &4530519641635803524

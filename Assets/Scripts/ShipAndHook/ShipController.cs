@@ -18,7 +18,7 @@ public class ShipController : MonoBehaviour
 
     public float m_AngularTurnSpeed = 10.0f;
 
-    [Header("Debug Params")]
+    // not debug, give ship an init speed
     public Vector3 m_initSpeed = Vector3.zero;
     [ReadOnly]
     public Vector3 m_Velocity = Vector3.zero;
@@ -41,7 +41,6 @@ public class ShipController : MonoBehaviour
         Assert.IsNotNull(m_Owner);
 
         m_Velocity = m_initSpeed;
-        m_Velocity.Normalize();
 
         m_HookLookup[HookType.Left] = m_HookL;
         m_HookLookup[HookType.Right] = m_HookR;
