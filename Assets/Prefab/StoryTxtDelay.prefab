@@ -26,7 +26,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2822023952240819129}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 1}
   m_ConstrainProportionsScale: 0
@@ -60,8 +60,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39713b39ab1fb2d4aae406605b147d20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayTime: 0
-  destroyWhenGameStart: 0
+  delayTime: 6.5
+  destroyWhenGameStart: 1
+  delayAfterGameStart: 1
 --- !u!111 &458699911886584454
 Animation:
   m_ObjectHideFlags: 0
@@ -157,4 +158,4 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u6587\u5B57"
+  m_Text: We need to use ROOT system to get home.
