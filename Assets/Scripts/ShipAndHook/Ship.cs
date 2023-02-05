@@ -24,6 +24,7 @@ public class Ship : MonoBehaviour
     private float m_CurrentEnergyAmount;
     private bool m_isLaunched = false;
     private float launchTime = 2;
+    private float deadCountDown = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +45,10 @@ public class Ship : MonoBehaviour
     void Update()
     {
         if (m_isDead) {
+            deadCountDown -= Time.deltaTime;
+            if (deadCountDown < 0) {
+                UnityEngine.SceneManagement.SceneManager.LoadScene("GoneHome");
+            }
             return;
         }
 
