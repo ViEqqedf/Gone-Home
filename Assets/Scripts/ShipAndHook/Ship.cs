@@ -48,7 +48,7 @@ public class Ship : MonoBehaviour
         }
 
         if (!m_isLaunched) {
-            if (Input.GetKeyDown(KeyCode.Space)) {
+            if (Input.anyKey) {
                 m_isLaunched = true;
                 m_ShipController.enabled = true;
             }
