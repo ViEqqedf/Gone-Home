@@ -70,7 +70,10 @@ MonoBehaviour:
   m_planetImageList:
   - {fileID: 2800000, guid: eb78df7cab469dc439177a4b425c473b, type: 3}
   - {fileID: 2800000, guid: 8a3de85eec36e0c4eb382ba418b6c757, type: 3}
+  - {fileID: 2800000, guid: fec5bab1f1280be4e8c641dd0a5928fd, type: 3}
   - {fileID: 2800000, guid: ee28cc565257a60479aa2d437831fbc1, type: 3}
+  - {fileID: 2800000, guid: 70b6e90d1764a0243a7bcdcf71117df0, type: 3}
+  - {fileID: 2800000, guid: c92afbd4e0630624e9f583e224f176f0, type: 3}
   - {fileID: 2800000, guid: d1ec5aee0c09af34fa9b6fb6f6619e85, type: 3}
   - {fileID: 2800000, guid: 2b96df2255b9c4444ab75e27d263ebb3, type: 3}
   - {fileID: 2800000, guid: 799a745a9776b6147a081ee627cfac80, type: 3}
