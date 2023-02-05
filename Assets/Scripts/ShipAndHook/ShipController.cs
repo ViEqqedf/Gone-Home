@@ -199,10 +199,6 @@ public class ShipController : MonoBehaviour
     {
         // RotateToGoRotationTangent(m_HookGrabbedPlanet.transform,
             // m_HookGrabbedPlanet.IsClockwiseRotate());
-        Vector3 toShip = transform.position - m_HookGrabbedPlanet.transform.position;
-        Vector3 up = Vector3.Cross(Vector3.forward, toShip);
-        int clockwiseFlag = m_HookGrabbedPlanet.IsClockwiseRotate() ? -1 : 1;
-        m_Velocity = clockwiseFlag * up;
     }
 
     public void RotateToGoRotationTangent(Transform trans, bool isClockwiseRotate) {
@@ -216,6 +212,11 @@ public class ShipController : MonoBehaviour
     {
         MoveAndRotateWithGo(m_HookGrabbedPlanet.gameObject,
             m_HookGrabbedPlanet.m_PlanetController.m_AngularRotateSpeed);
+
+        Vector3 toShip = transform.position - m_HookGrabbedPlanet.transform.position;
+        Vector3 up = Vector3.Cross(Vector3.forward, toShip);
+        int clockwiseFlag = m_HookGrabbedPlanet.IsClockwiseRotate() ? -1 : 1;
+        m_Velocity = clockwiseFlag * up;
     }
 
     public void MoveAndRotateWithGo(GameObject go, float speed)
