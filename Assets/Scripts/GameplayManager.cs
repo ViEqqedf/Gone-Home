@@ -26,7 +26,7 @@ public class GameplayManager : MonoBehaviour
 
     private void Update()
     {
-        
+
     }
 
     private void OnDestroy()

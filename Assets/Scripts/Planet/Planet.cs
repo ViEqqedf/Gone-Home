@@ -34,6 +34,11 @@ public class Planet : MonoBehaviour
         Sprite sprite = Sprite.Create((Texture2D) m_planetImageList[index],
                 sr.sprite.textureRect, new Vector2(0.5f, 0.5f));
         sr.sprite = sprite;
+
+        int starCount = Random.Range(3, 7);
+        for (int i = 0; i < starCount; i++) {
+            // GameObject.Instantiate()
+        }
     }
 
     // Update is called once per frame
