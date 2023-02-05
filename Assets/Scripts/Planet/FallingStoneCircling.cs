@@ -6,7 +6,7 @@ public class FallingStoneCircling : MonoBehaviour {
     public GameObject parent;
     public float m_AngularRotateSpeed;
 
-    private bool isLaunched = false;
+    private bool isLaunched = true;
     private bool isDead = false;
     private GameObject ship;
 
