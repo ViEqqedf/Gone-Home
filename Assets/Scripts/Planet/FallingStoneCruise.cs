@@ -19,6 +19,10 @@ public class FallingStoneCruise : MonoBehaviour {
     }
 
     void Update() {
+        if (ship == null) {
+            return;
+        }
+
         if (!isLaunched && transform.position.x - ship.transform.position.x < 25) {
             isLaunched = true;
         }

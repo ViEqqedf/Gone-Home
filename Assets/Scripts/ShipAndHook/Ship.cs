@@ -10,6 +10,7 @@ public class Ship : MonoBehaviour
     public ShipUIController m_ShipUIController;
 
     public GameObject m_tailFlameGo;
+    public GameObject m_shipExplodeGo;
     public float m_SpeedDrainingPlanetEnergy = 1.0f;
     public float m_SpeedGainingEnergy = 1.0f;
     public float m_SpeedLosingEnergy = 2.0f;
@@ -89,6 +90,13 @@ public class Ship : MonoBehaviour
     public void SetDead(bool isDead) {
         m_isDead = isDead;
         m_ShipController.enabled = !isDead;
+
+        if (isDead) {
+            GameObject.Instantiate(m_shipExplodeGo, transform.position, Quaternion.identity);
+            for (int i = 0, count = transform.childCount; i < count; i++) {
+                Destroy(transform.GetChild(i).gameObject);
+            }
+        }
     }
 
     public void SetWin(GameObject go) {
