@@ -181,7 +181,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u6B22\u8FCE\u56DE\u5BB6~"
+  m_Text: Welcome home >v<
 --- !u!111 &408550905
 Animation:
   m_ObjectHideFlags: 0
