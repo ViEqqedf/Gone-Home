@@ -94,6 +94,8 @@ public class ShipController : MonoBehaviour
         //{
 
         //}
+
+        Debug.Log("2  " + m_Velocity.magnitude);
     }
 
     private void OnDestroy()
@@ -210,13 +212,18 @@ public class ShipController : MonoBehaviour
 
     public void MoveAndRotateWithPlanet()
     {
-        MoveAndRotateWithGo(m_HookGrabbedPlanet.gameObject,
-            m_HookGrabbedPlanet.m_PlanetController.m_AngularRotateSpeed);
-
         Vector3 toShip = transform.position - m_HookGrabbedPlanet.transform.position;
         Vector3 up = Vector3.Cross(Vector3.forward, toShip);
         int clockwiseFlag = m_HookGrabbedPlanet.IsClockwiseRotate() ? -1 : 1;
-        m_Velocity = clockwiseFlag * up;
+        m_Velocity = (clockwiseFlag * up).normalized;
+
+        float rotateSpeed = m_HookGrabbedPlanet.m_PlanetController.m_AngularRotateSpeed;
+        Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, rotateSpeed * Time.deltaTime);
+        Matrix4x4 rotMat = Matrix4x4.Rotate(rotation);
+        Vector3 toShipNew = rotMat.MultiplyVector(toShip);
+        m_Velocity *= Vector3.Distance(toShipNew + m_HookGrabbedPlanet.transform.position, transform.position) / Time.deltaTime;
+
+        MoveAndRotateWithGo(m_HookGrabbedPlanet.gameObject, rotateSpeed);
     }
 
     public void MoveAndRotateWithGo(GameObject go, float speed)
@@ -227,6 +234,7 @@ public class ShipController : MonoBehaviour
         Matrix4x4 rotMat = Matrix4x4.Rotate(rotation);
         //Vector3 toShipNew = rotation * toShip;
         Vector3 toShipNew = rotMat.MultiplyVector(toShip);
+        Debug.Log("1  " + toShipNew.magnitude);
         transform.position = toShipNew + go.transform.position;
         transform.rotation = (rotation * transform.rotation).normalized;
     }
