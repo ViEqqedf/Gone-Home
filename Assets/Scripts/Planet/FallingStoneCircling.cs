@@ -6,14 +6,21 @@ public class FallingStoneCircling : MonoBehaviour {
     public GameObject parent;
     public float m_AngularRotateSpeed;
 
+    private bool isLaunched = false;
     private bool isDead = false;
+    private GameObject ship;
 
     void Start() {
         isDead = false;
+        ship = GameObject.Find("Ship");
     }
 
     void Update() {
-        if (!isDead) {
+        if (!isLaunched && transform.position.x - ship.transform.position.x < 25) {
+            isLaunched = true;
+        }
+
+        if (isLaunched && !isDead) {
             transform.RotateAround(parent.transform.position,
                 Vector3.forward, m_AngularRotateSpeed * Time.deltaTime);
         }

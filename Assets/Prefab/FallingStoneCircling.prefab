@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2016111491976849371}
   - component: {fileID: 4202597058274721151}
   m_Layer: 0
-  m_Name: FallingStone2
+  m_Name: FallingStoneCircling
   m_TagString: FallingStone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

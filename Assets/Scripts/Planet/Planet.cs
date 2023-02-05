@@ -13,6 +13,8 @@ public class Planet : MonoBehaviour
     public float m_PlanetInitEnergy = 10.0f;
     public float m_PlanetMinScale = 0.1f;
 
+    public List<Object> m_planetImageList = new List<Object>();
+
     [ReadOnly]
     private float m_PlanetCurEnergy;
     private Vector3 m_PlanetOrgScale;
@@ -26,6 +28,12 @@ public class Planet : MonoBehaviour
 
         m_PlanetCurEnergy = m_PlanetInitEnergy;
         m_PlanetOrgScale = transform.localScale;
+
+        SpriteRenderer sr = transform.Find("HookCollider").GetComponent<SpriteRenderer>();
+        int index = Random.Range(0, m_planetImageList.Count - 1);
+        Sprite sprite = Sprite.Create((Texture2D) m_planetImageList[index],
+                sr.sprite.textureRect, new Vector2(0.5f, 0.5f));
+        sr.sprite = sprite;
     }
 
     // Update is called once per frame
