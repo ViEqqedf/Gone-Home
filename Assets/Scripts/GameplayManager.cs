@@ -26,7 +26,9 @@ public class GameplayManager : MonoBehaviour
 
     private void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.R)) {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("GoneHome");
+        }
     }
 
     private void OnDestroy()
