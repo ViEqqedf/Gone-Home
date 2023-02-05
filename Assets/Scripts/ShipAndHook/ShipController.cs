@@ -57,7 +57,7 @@ public class ShipController : MonoBehaviour
         Assert.IsNotNull(m_GOTREnginePE);
         Assert.IsNotNull(m_GOBLEnginePE);
         Assert.IsNotNull(m_GOBREnginePE);
-        
+
         m_GOTLEnginePE.SetActive(false);
         m_GOTREnginePE.SetActive(false);
         m_GOBLEnginePE.SetActive(false);
@@ -197,8 +197,8 @@ public class ShipController : MonoBehaviour
 
     public void RotateToPlanetRotationTangent()
     {
-        RotateToGoRotationTangent(m_HookGrabbedPlanet.transform,
-            m_HookGrabbedPlanet.IsClockwiseRotate());
+        // RotateToGoRotationTangent(m_HookGrabbedPlanet.transform,
+            // m_HookGrabbedPlanet.IsClockwiseRotate());
     }
 
     public void RotateToGoRotationTangent(Transform trans, bool isClockwiseRotate) {
