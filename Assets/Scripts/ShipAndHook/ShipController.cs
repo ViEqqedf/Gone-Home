@@ -57,7 +57,7 @@ public class ShipController : MonoBehaviour
         Assert.IsNotNull(m_GOTREnginePE);
         Assert.IsNotNull(m_GOBLEnginePE);
         Assert.IsNotNull(m_GOBREnginePE);
-        
+
         m_GOTLEnginePE.SetActive(false);
         m_GOTREnginePE.SetActive(false);
         m_GOBLEnginePE.SetActive(false);
@@ -94,6 +94,8 @@ public class ShipController : MonoBehaviour
         //{
 
         //}
+
+        Debug.Log("2  " + m_Velocity.magnitude);
     }
 
     private void OnDestroy()
@@ -182,9 +184,9 @@ public class ShipController : MonoBehaviour
 
     public void OnHookReleasePlanet()
     {
-        float radius = (m_HookGrabbedPlanet.transform.position - transform.position).magnitude;
-        int clockwiseFlag = m_HookGrabbedPlanet.IsClockwiseRotate() ? -1 : 1;
-        m_Velocity = clockwiseFlag * Mathf.Deg2Rad * m_HookGrabbedPlanet.m_PlanetController.m_AngularRotateSpeed * radius * transform.up;
+        // float radius = (m_HookGrabbedPlanet.transform.position - transform.position).magnitude;
+        // int clockwiseFlag = m_HookGrabbedPlanet.IsClockwiseRotate() ? -1 : 1;
+        // m_Velocity = clockwiseFlag * Mathf.Deg2Rad * m_HookGrabbedPlanet.m_PlanetController.m_AngularRotateSpeed * radius * transform.up;
 
         m_HookGrabbedPlanet.SetToDestroy();
         m_HookGrabbedPlanet = null;
@@ -197,8 +199,8 @@ public class ShipController : MonoBehaviour
 
     public void RotateToPlanetRotationTangent()
     {
-        RotateToGoRotationTangent(m_HookGrabbedPlanet.transform,
-            m_HookGrabbedPlanet.IsClockwiseRotate());
+        // RotateToGoRotationTangent(m_HookGrabbedPlanet.transform,
+            // m_HookGrabbedPlanet.IsClockwiseRotate());
     }
 
     public void RotateToGoRotationTangent(Transform trans, bool isClockwiseRotate) {
@@ -210,8 +212,18 @@ public class ShipController : MonoBehaviour
 
     public void MoveAndRotateWithPlanet()
     {
-        MoveAndRotateWithGo(m_HookGrabbedPlanet.gameObject,
-            m_HookGrabbedPlanet.m_PlanetController.m_AngularRotateSpeed);
+        Vector3 toShip = transform.position - m_HookGrabbedPlanet.transform.position;
+        Vector3 up = Vector3.Cross(Vector3.forward, toShip);
+        int clockwiseFlag = m_HookGrabbedPlanet.IsClockwiseRotate() ? -1 : 1;
+        m_Velocity = (clockwiseFlag * up).normalized;
+
+        float rotateSpeed = m_HookGrabbedPlanet.m_PlanetController.m_AngularRotateSpeed;
+        Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, rotateSpeed * Time.deltaTime);
+        Matrix4x4 rotMat = Matrix4x4.Rotate(rotation);
+        Vector3 toShipNew = rotMat.MultiplyVector(toShip);
+        m_Velocity *= Vector3.Distance(toShipNew + m_HookGrabbedPlanet.transform.position, transform.position) / Time.deltaTime;
+
+        MoveAndRotateWithGo(m_HookGrabbedPlanet.gameObject, rotateSpeed);
     }
 
     public void MoveAndRotateWithGo(GameObject go, float speed)
@@ -222,6 +234,7 @@ public class ShipController : MonoBehaviour
         Matrix4x4 rotMat = Matrix4x4.Rotate(rotation);
         //Vector3 toShipNew = rotation * toShip;
         Vector3 toShipNew = rotMat.MultiplyVector(toShip);
+        Debug.Log("1  " + toShipNew.magnitude);
         transform.position = toShipNew + go.transform.position;
         transform.rotation = (rotation * transform.rotation).normalized;
     }
@@ -294,6 +307,22 @@ public class StateCruise : State
     {
         Debug.Log("Enter StateCruise");
         m_Controller = Parent.Owner.GetComponent<ShipController>();
+
+        bool turnOn = false;
+        if (Input.GetButton("LeftTurn"))
+        {
+            m_Controller.EnableLeftTurnEngines();
+            turnOn = true;
+        }
+        if (Input.GetButton("RightTurn"))
+        {
+            m_Controller.EnableRightTurnEngines();
+            turnOn = true;
+        }
+        if (turnOn)
+        {
+            m_Controller.PlayEngineAudio();
+        }
     }
 
     public override State OnRun()

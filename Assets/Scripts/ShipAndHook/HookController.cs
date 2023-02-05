@@ -106,7 +106,7 @@ public class HookController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision) {
         State curState = m_Ship.m_ShipController.m_StateMachine.CurrentState;
-        if (curState.StateId == State.StateIdEnum.StateHookLocked) {
+        if (curState.StateId != State.StateIdEnum.StateDeployHook) {
             return;
         }
 
