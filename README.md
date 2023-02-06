@@ -1,6 +1,6 @@
 GlobalGameJam 2023
 
-Gone Home
+<b>Gone Home</b>
 
 
 credit:
