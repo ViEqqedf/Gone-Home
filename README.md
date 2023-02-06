@@ -1,3 +1,10 @@
 GlobalGameJam 2023
 
-Zipline
+Gone Home
+
+credit:
+VirrorE: Programmer
+tigerccx: Programmer, Artist
+Rwan: Level Designer, Artist
+
+And we are all Designer XD
