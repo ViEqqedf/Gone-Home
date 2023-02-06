@@ -4,11 +4,12 @@ Gone Home
 
 
 credit:
-VirrorE: Programmer
 
-tigerccx: Programmer, Artist
+- VirrorE: Programmer
 
-Rwan: Level Designer, Artist
+- tigerccx: Programmer, Artist
+
+- Rwan: Level Designer, Artist
 
 
 And we are all Designer XD
